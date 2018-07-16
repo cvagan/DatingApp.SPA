@@ -15,6 +15,10 @@ export class NavComponent implements OnInit {
   ngOnInit() {
   }
 
+  currentUser() {
+    return this.authService.decodedToken.unique_name;
+  }
+
   login() {
     this.authService.login(this.model).subscribe(data => {
       this.alertify.success('Logged in ' + this.authService.decodedToken.unique_name);
