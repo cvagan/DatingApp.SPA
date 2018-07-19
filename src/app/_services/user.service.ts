@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { AuthHttp } from 'angular2-jwt';
+import { puts } from 'util';
 
 @Injectable()
 export class UserService {
@@ -24,6 +25,11 @@ export class UserService {
         return this.authHttp
             .get(this.baseUrl + 'users/' + id)
             .map(response => <User>response.json())
+            .catch(this.handleError);
+    }
+
+    updateUser(id: number, user: User) {
+        return this.authHttp.put(this.baseUrl + 'users/' + id, user)
             .catch(this.handleError);
     }
 
