@@ -24,6 +24,10 @@ export class MemberEditComponent implements OnInit {
     });
   }
 
+  updateMainPhoto(photoUrl: string) {
+    this.user.photoUrl = photoUrl;
+  }
+
   updateUser() {
     this.userService.updateUser(this.authService.decodedToken.nameid, this.user)
       .subscribe(next => {

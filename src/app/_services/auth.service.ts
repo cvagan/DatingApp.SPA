@@ -6,12 +6,14 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
+import { User } from '../_models/User';
 
 @Injectable()
 export class AuthService {
     baseUrl = environment.apiUrl + 'auth/';
     userToken: any;
     decodedToken: any;
+    currentUser: User;
     jwtHelper: JwtHelper = new JwtHelper();
 
     constructor(private http: Http) { }
@@ -21,7 +23,9 @@ export class AuthService {
             const user = response.json();
             if (user) {
                 localStorage.setItem('token', user.tokenString);
+                localStorage.setItem('user', JSON.stringify(user.user));
                 this.decodedToken = this.jwtHelper.decodeToken(user.tokenString);
+                this.currentUser = user.user;
                 this.userToken = user.tokenString;
             }
         }).catch(this.handleError);
